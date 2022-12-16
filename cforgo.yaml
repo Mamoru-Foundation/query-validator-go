@@ -7,7 +7,7 @@ GENERATOR:
     - { name: CFLAGS, flags: [ "-I${SRCDIR}/../packaged/include" ] }
     - { name: LDFLAGS, flags: [ "-lmamoru_query_validator_go" ] }
     - { name: LDFLAGS, traits: [ "darwin", "arm64" ], flags: [ "-L${SRCDIR}/../packaged/lib/darwin-arm64" ] }
-    - { name: LDFLAGS, traits: [ "linux", "amd64" ], flags: [ "-lm -L${SRCDIR}/../packaged/lib/linux-amd64" ] }
+    - { name: LDFLAGS, traits: [ "linux", "amd64" ], flags: [ "-Wl,--no-as-needed -ldl -lm -L${SRCDIR}/../packaged/lib/linux-amd64" ] }
   Options:
     SafeStrings: true
 
