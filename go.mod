@@ -1,4 +1,4 @@
-module github.com/Mamoru-Foundation/rule-expression-validator-go
+module github.com/Mamoru-Foundation/query-validator-go
 
 go 1.19
 

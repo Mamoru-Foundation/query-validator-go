@@ -3,7 +3,7 @@ package query_validator
 import (
 	"C"
 	"errors"
-	"github.com/Mamoru-Foundation/rule-expression-validator-go/generated_bindings"
+	"github.com/Mamoru-Foundation/query-validator-go/generated_bindings"
 	"unsafe"
 )
 

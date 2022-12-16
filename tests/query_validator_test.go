@@ -1,7 +1,7 @@
 package tests
 
 import (
-	"github.com/Mamoru-Foundation/rule-expression-validator-go/query_validator"
+	"github.com/Mamoru-Foundation/query-validator-go/query_validator"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
