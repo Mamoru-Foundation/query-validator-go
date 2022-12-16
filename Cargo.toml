@@ -1,0 +1,17 @@
+[package]
+name = "mamoru-query-validator-go"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["staticlib"]
+
+[profile.release]
+# optimize for binary size
+opt-level = "z"
+strip = true
+lto = true
+codegen-units = 1
+
+[dependencies]
+query-validator-c = {git = "https://github.com/Mamoru-Foundation/mamoru-core", rev = "2b7b28d62540e78621475ef418c393759eba3168"}
