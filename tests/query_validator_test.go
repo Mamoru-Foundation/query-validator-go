@@ -23,3 +23,15 @@ func TestValidateInvalidSuiExpression(t *testing.T) {
 
 	assert.NotNil(t, err)
 }
+
+func TestValidateValidEvmExpression(t *testing.T) {
+	err := query_validator.Validate(query_validator.ChainEvm, "SELECT * FROM blocks")
+
+	assert.Nil(t, err)
+}
+
+func TestValidateInvalidEvmExpression(t *testing.T) {
+	err := query_validator.Validate(query_validator.ChainEvm, "SELECT * FROM dummy")
+
+	assert.NotNil(t, err)
+}

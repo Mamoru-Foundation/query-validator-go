@@ -11,7 +11,6 @@ crate-type = ["staticlib"]
 opt-level = "z"
 strip = true
 lto = true
-codegen-units = 1
 
 [dependencies]
-query-validator-c = {git = "https://github.com/Mamoru-Foundation/mamoru-core", rev = "2b7b28d62540e78621475ef418c393759eba3168"}
+query-validator-c = {git = "https://github.com/Mamoru-Foundation/mamoru-core", rev = "32f3b4e342db764835bff41d96804ab9b3c79e75"}

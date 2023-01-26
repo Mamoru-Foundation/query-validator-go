@@ -11,6 +11,7 @@ type Chain byte
 
 const (
 	ChainSui Chain = generated_bindings.FfiChainTypeSui
+	ChainEvm Chain = generated_bindings.FfiChainTypeEvm
 )
 
 func Validate(chain Chain, query string) error {
