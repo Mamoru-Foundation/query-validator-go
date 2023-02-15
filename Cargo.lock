@@ -338,7 +338,7 @@ dependencies = [
 [[package]]
 name = "blockchain-data-derive"
 version = "0.1.0"
-source = "git+https://github.com/Mamoru-Foundation/mamoru-core?rev=32f3b4e342db764835bff41d96804ab9b3c79e75#32f3b4e342db764835bff41d96804ab9b3c79e75"
+source = "git+https://github.com/Mamoru-Foundation/mamoru-core?rev=009e8da968e027676ea684c8f726a97dce589d95#009e8da968e027676ea684c8f726a97dce589d95"
 dependencies = [
  "darling",
  "maplit",
@@ -351,7 +351,7 @@ dependencies = [
 [[package]]
 name = "blockchain-data-macro"
 version = "0.1.0"
-source = "git+https://github.com/Mamoru-Foundation/mamoru-core?rev=32f3b4e342db764835bff41d96804ab9b3c79e75#32f3b4e342db764835bff41d96804ab9b3c79e75"
+source = "git+https://github.com/Mamoru-Foundation/mamoru-core?rev=009e8da968e027676ea684c8f726a97dce589d95#009e8da968e027676ea684c8f726a97dce589d95"
 dependencies = [
  "blockchain-data-derive",
  "paste",
@@ -1589,7 +1589,7 @@ dependencies = [
 [[package]]
 name = "mamoru-core"
 version = "0.1.0"
-source = "git+https://github.com/Mamoru-Foundation/mamoru-core?rev=32f3b4e342db764835bff41d96804ab9b3c79e75#32f3b4e342db764835bff41d96804ab9b3c79e75"
+source = "git+https://github.com/Mamoru-Foundation/mamoru-core?rev=009e8da968e027676ea684c8f726a97dce589d95#009e8da968e027676ea684c8f726a97dce589d95"
 dependencies = [
  "as-ffi-bindings",
  "async-trait",
@@ -1607,7 +1607,7 @@ dependencies = [
 [[package]]
 name = "mamoru-evm-types"
 version = "0.1.0"
-source = "git+https://github.com/Mamoru-Foundation/mamoru-core?rev=32f3b4e342db764835bff41d96804ab9b3c79e75#32f3b4e342db764835bff41d96804ab9b3c79e75"
+source = "git+https://github.com/Mamoru-Foundation/mamoru-core?rev=009e8da968e027676ea684c8f726a97dce589d95#009e8da968e027676ea684c8f726a97dce589d95"
 dependencies = [
  "blockchain-data-macro",
  "datafusion",
@@ -1624,7 +1624,7 @@ dependencies = [
 [[package]]
 name = "mamoru-sui-types"
 version = "0.1.0"
-source = "git+https://github.com/Mamoru-Foundation/mamoru-core?rev=32f3b4e342db764835bff41d96804ab9b3c79e75#32f3b4e342db764835bff41d96804ab9b3c79e75"
+source = "git+https://github.com/Mamoru-Foundation/mamoru-core?rev=009e8da968e027676ea684c8f726a97dce589d95#009e8da968e027676ea684c8f726a97dce589d95"
 dependencies = [
  "blockchain-data-macro",
  "datafusion",
@@ -2014,7 +2014,7 @@ dependencies = [
 [[package]]
 name = "query-validator"
 version = "0.1.0"
-source = "git+https://github.com/Mamoru-Foundation/mamoru-core?rev=32f3b4e342db764835bff41d96804ab9b3c79e75#32f3b4e342db764835bff41d96804ab9b3c79e75"
+source = "git+https://github.com/Mamoru-Foundation/mamoru-core?rev=009e8da968e027676ea684c8f726a97dce589d95#009e8da968e027676ea684c8f726a97dce589d95"
 dependencies = [
  "chrono",
  "datafusion",
@@ -2027,7 +2027,7 @@ dependencies = [
 [[package]]
 name = "query-validator-c"
 version = "0.1.0"
-source = "git+https://github.com/Mamoru-Foundation/mamoru-core?rev=32f3b4e342db764835bff41d96804ab9b3c79e75#32f3b4e342db764835bff41d96804ab9b3c79e75"
+source = "git+https://github.com/Mamoru-Foundation/mamoru-core?rev=009e8da968e027676ea684c8f726a97dce589d95#009e8da968e027676ea684c8f726a97dce589d95"
 dependencies = [
  "lazy_static",
  "query-validator",

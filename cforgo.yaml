@@ -22,11 +22,13 @@ TRANSLATOR:
   PtrTips:
     struct:
       - { target: FfiValidationResult, tips: [ 0,ref ] }
+      - { target: "^slice_(.+)_t", tips: [ sref ] }
   Rules:
     global:
       - { transform: title }
       - { action: accept, from: "^ffi" }
       - { action: accept, from: "^Ffi" }
+      - { action: accept, from: "^slice_" }
       - { transform: export }
     const:
       - { transform: lower }
