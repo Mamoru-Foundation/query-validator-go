@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: Validate inputs
         run: |
-          if [[ "${{ inputs.tag }}" =~ ^v\d+\.\d+\.\d+$ ]]; then
+          if [[ "${{ inputs.tag }}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "OK";
           else
             echo "Invalid tag format. Given: ${{ inputs.tag }}";
