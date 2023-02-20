@@ -49,6 +49,7 @@ jobs:
         with:
           ssh-private-key: |
             ${{ secrets.VALIDATION_CHAIN_KEY }}
+            ${{ secrets.MAMORU_CORE_KEY }}
 
       - name: Set up Rust
         uses: actions-rs/toolchain@v1
