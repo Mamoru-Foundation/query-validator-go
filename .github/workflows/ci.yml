@@ -5,11 +5,19 @@ on:
     branches:
       - main
 
+env:
+  CARGO_NET_GIT_FETCH_WITH_CLI: true
+  CARGO_INCREMENTAL: 0
+
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    - uses: webfactory/ssh-agent@v0.6.0
+      with:
+        ssh-private-key: |
+          ${{ secrets.VALIDATION_CHAIN_KEY }}
 
     - name: Set up Go
       uses: actions/setup-go@v2
@@ -29,7 +37,6 @@ jobs:
 
     - name: Run tests
       run: make test
-#
-#    - name: Run bench
-#      run: make bench
-#
+
+    - name: Run bench
+      run: make bench
