@@ -32,7 +32,10 @@ jobs:
 
   build:
     needs: prepare-branch
-    runs-on: self-hosted
+    strategy:
+      matrix:
+        runner: [ self-hosted, self-hosted-m1 ]
+    runs-on: ${{ matrix.runner }}
     env:
       CARGO_NET_GIT_FETCH_WITH_CLI: true
     steps:
@@ -40,16 +43,26 @@ jobs:
         with:
           ref: ${{ env.RELEASE_BRANCH_NAME }}
 
+      - uses: ./.github/actions/init-git-user
+
       - uses: webfactory/ssh-agent@v0.6.0
         with:
           ssh-private-key: |
             ${{ secrets.VALIDATION_CHAIN_KEY }}
             ${{ secrets.MAMORU_CORE_KEY }}
 
-      - name: Set up Rust
+      - if: matrix.runner == 'self-hosted'
+        name: Set up Rust
         uses: actions-rs/toolchain@v1
         with:
           override: true
+
+      - if: matrix.runner == 'self-hosted-m1'
+        name: Set up Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          override: true
+          target: x86_64-apple-darwin
 
       - name: Set up Go
         uses: actions/setup-go@v2
@@ -58,21 +71,31 @@ jobs:
 
       - uses: Swatinem/rust-cache@v2
 
-      - name: Build the binary
-        run: make build-rust-release
+      - if: matrix.runner == 'self-hosted'
+        name: Build the binary
+        run: |
+          make build-rust-release
+          git add -f ./packaged/lib/linux-amd64/libmamoru_query_validator_go.a
+          git commit -m "Add `linux-amd64` binary"
+
+      - if: matrix.runner == 'self-hosted-m1'
+        name: Build the binary
+        run: |
+          make build-rust-release
+          git add -f ./packaged/lib/darwin-arm64/libmamoru_query_validator_go.a
+          git commit -m "Add `darwin-arm64` binary"
+
+          make build-rust-release-macos-x86
+          git add -f ./packaged/lib/darwin-amd64/libmamoru_query_validator_go.a
+          git commit -m "Add `darwin-amd64` binary"
 
       - name: Run tests
         run: |
           make test
           make bench
 
-      - uses: ./.github/actions/init-git-user
-
-      - name: Commit and push
+      - name: Push the binary
         run: |
-          git add -f ./packaged/lib/linux-amd64/libmamoru_query_validator_go.a
-          git commit -m "Add `linux-amd64` binary"
-
           # Try push 5 times due to possible conflicts from other build jobs
           for i in {1..5}; do
             git pull --rebase && git push && break || sleep 5;
