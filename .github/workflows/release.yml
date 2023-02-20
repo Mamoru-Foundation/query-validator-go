@@ -34,7 +34,7 @@ jobs:
       - name: Create the release branch
         run: |
           git checkout -b ${{ env.RELEASE_BRANCH_NAME }}
-          git --set-upstream origin push
+          git push --set-upstream origin ${{ env.RELEASE_BRANCH_NAME }}
 
   build:
     needs: prepare-branch
