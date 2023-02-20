@@ -7,7 +7,6 @@ on:
         required: true
 
 env:
-  CARGO_NET_GIT_FETCH_WITH_CLI: true
   RELEASE_BRANCH_NAME: release/${{ inputs.tag }}
   GIT_USER_NAME: GitHub Actions
   GIT_USER_EMAIL: noreply@github.com
@@ -39,10 +38,17 @@ jobs:
   build:
     needs: prepare-branch
     runs-on: self-hosted
+    env:
+      CARGO_NET_GIT_FETCH_WITH_CLI: true
     steps:
       - uses: actions/checkout@v3
         with:
           ref: ${{ env.RELEASE_BRANCH_NAME }}
+
+      - uses: webfactory/ssh-agent@v0.6.0
+        with:
+          ssh-private-key: |
+            ${{ secrets.VALIDATION_CHAIN_KEY }}
 
       - name: Set up Rust
         uses: actions-rs/toolchain@v1
@@ -50,11 +56,6 @@ jobs:
           override: true
 
       - uses: Swatinem/rust-cache@v2
-
-      - uses: webfactory/ssh-agent@v0.6.0
-        with:
-          ssh-private-key: |
-            ${{ secrets.VALIDATION_CHAIN_KEY }}
 
       - name: Build the binary
         run: make build-rust-release
