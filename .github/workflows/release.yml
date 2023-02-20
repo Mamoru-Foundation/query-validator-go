@@ -71,7 +71,11 @@ jobs:
         run: |
           git add -f ./packaged/lib/linux-amd64/libmamoru_query_validator_go.a
           git commit -m "Add `linux-amd64` binary"
-          git push
+
+          # Try push 5 times due to possible conflicts from other build jobs
+          for i in {1..5}; do
+            git pull --rebase && git push && break || sleep 5;
+          done
 
   release:
     runs-on: ubuntu-latest
