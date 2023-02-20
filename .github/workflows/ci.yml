@@ -10,7 +10,7 @@ env:
   CARGO_INCREMENTAL: 0
 
 jobs:
-  lint:
+  lint_test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -37,6 +37,3 @@ jobs:
 
     - name: Run tests
       run: make test
-
-    - name: Run bench
-      run: make bench
