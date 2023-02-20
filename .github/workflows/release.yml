@@ -44,24 +44,15 @@ jobs:
         with:
           ref: ${{ env.RELEASE_BRANCH_NAME }}
 
+      - name: Set up Rust
+        uses: actions-rs/toolchain@v1
+
+      - uses: Swatinem/rust-cache@v2
+
       - uses: webfactory/ssh-agent@v0.6.0
         with:
           ssh-private-key: |
             ${{ secrets.VALIDATION_CHAIN_KEY }}
-
-      - name: Initialize git config
-        run: |
-          git config user.name "${{ env.GIT_USER_NAME }}"
-          git config user.email ${{ env.GIT_USER_EMAIL }}
-
-      - name: Set up Rust
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          override: true
-          default: true
-
-      - uses: Swatinem/rust-cache@v2
 
       - name: Build the binary
         run: make build-rust-release
@@ -70,6 +61,11 @@ jobs:
         run: |
           make test
           make bench
+
+      - name: Initialize git config
+        run: |
+          git config user.name "${{ env.GIT_USER_NAME }}"
+          git config user.email ${{ env.GIT_USER_EMAIL }}
 
       - name: Commit and push
         run: |
