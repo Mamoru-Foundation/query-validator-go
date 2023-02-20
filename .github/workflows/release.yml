@@ -1,0 +1,90 @@
+name: "Release"
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'The release tag. Must follow Go versioning conventions, e.g. "v0.0.0"'
+        required: true
+
+env:
+  CARGO_NET_GIT_FETCH_WITH_CLI: 1
+  RELEASE_BRANCH_NAME: release/${{ inputs.tag }}
+  GIT_USER_NAME: GitHub Actions
+  GIT_USER_EMAIL: noreply@github.com
+
+jobs:
+  prepare-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate inputs
+        run: |
+          if [[ "${{ inputs.tag }}" =~ ^v\d+\.\d+\.\d+$ ]]; then
+            echo "OK";
+          else
+            echo "Invalid tag format. Given: ${{ inputs.tag }}";
+            exit 1;
+          fi
+      - uses: actions/checkout@v3
+
+      - name: Initialize git config
+        run: |
+          git config user.name "${{ GIT_USER_NAME }}"
+          git config user.email ${{ GIT_USER_EMAIL }}
+
+      - name: Create the release branch
+        run: |
+          git checkout -b ${{ env.RELEASE_BRANCH_NAME }}
+          git push
+
+  build:
+    needs: prepare-branch
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ env.RELEASE_BRANCH_NAME }}
+
+      - uses: webfactory/ssh-agent@v0.6.0
+        with:
+          ssh-private-key: |
+            ${{ secrets.VALIDATION_CHAIN_KEY }}
+
+      - name: Initialize git config
+        run: |
+          git config user.name "${{ GIT_USER_NAME }}"
+          git config user.email ${{ GIT_USER_EMAIL }}
+
+      - name: Set up Rust
+        uses: actions-rs/toolchain@v1
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Build the binary
+        run: make build-rust-release
+
+      - name: Run tests
+        run: |
+          make test
+          make bench
+
+      - name: Commit and push
+        run: |
+          git add -f ./packaged/lib/linux-amd64/libmamoru_query_validator_go.a
+          git commit -m "Add `linux-amd64` binary"
+          git push
+
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ env.RELEASE_BRANCH_NAME }}
+
+      - name: Create the release tag
+        run: |
+          git tag -a ${{ inputs.tag }} -m "Release ${{ inputs.tag }}"
+          git push origin ${{ inputs.tag }}
+
+      - name: Cache package in GOPROXY
+        run: |
+          GOPROXY=proxy.golang.org go list -m github.com/${{ github.repository }}@${{ inputs.tag }}
