@@ -16,12 +16,20 @@ jobs:
       with:
         go-version: 1.19
 
+    - name: Set up Rust
+      uses: actions-rs/toolchain@v1
+
+    - uses: Swatinem/rust-cache@v2
+
     - name: Verify dependencies
       run: go mod verify
 
+    - name: Build a single binary for tests
+      run: make build-rust
+
     - name: Run tests
       run: make test
-
-    - name: Run bench
-      run: make bench
-
+#
+#    - name: Run bench
+#      run: make bench
+#
