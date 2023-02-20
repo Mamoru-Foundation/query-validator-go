@@ -28,8 +28,8 @@ jobs:
 
       - name: Initialize git config
         run: |
-          git config user.name "${{ GIT_USER_NAME }}"
-          git config user.email ${{ GIT_USER_EMAIL }}
+          git config user.name "${{ env.GIT_USER_NAME }}"
+          git config user.email ${{ env.GIT_USER_EMAIL }}
 
       - name: Create the release branch
         run: |
@@ -51,8 +51,8 @@ jobs:
 
       - name: Initialize git config
         run: |
-          git config user.name "${{ GIT_USER_NAME }}"
-          git config user.email ${{ GIT_USER_EMAIL }}
+          git config user.name "${{ env.GIT_USER_NAME }}"
+          git config user.email ${{ env.GIT_USER_EMAIL }}
 
       - name: Set up Rust
         uses: actions-rs/toolchain@v1
