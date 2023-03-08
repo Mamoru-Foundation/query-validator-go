@@ -13,4 +13,4 @@ strip = true
 lto = true
 
 [dependencies]
-query-validator-c = {git = "https://github.com/Mamoru-Foundation/mamoru-core", rev = "3ccf8378d2c171bb3dfb452c364ee47cca1d8cfd"}
+query-validator-c = {git = "https://github.com/Mamoru-Foundation/mamoru-core", rev = "6135da260d462ce0212fde50ab1da50a2b0f189d"}
